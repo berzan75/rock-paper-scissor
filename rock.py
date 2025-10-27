@@ -1,5 +1,5 @@
 from tkinter import *
-
+import random
 t=Tk()
 t.title("Rock Paper Scissor")
 player_score=0
@@ -22,8 +22,43 @@ def player_wins():
 def tie():
     global player_score, computer_score
     l2.config(text="Its A Tie")
-    c_score.config(text="Computer Score"+str (computer_score))
-    p_score.config(text="Player Score"+str (player_score))
+    c_score.config(text="Computer Score="+str (computer_score))
+    p_score.config(text="Player Score="+str (player_score))
+
+def player_choice(player_input):
+    global player_score, computer_score
+    print(player_input)
+    computer_input=get_computer_choice()
+    print(computer_input)
+
+    p_selected.config(text="You selected="+player_input[0])
+    c_selected.config(text="Computer Selected="+computer_input[0])
+
+    if (player_input==computer_input):
+        tie()
+    
+    #if the player has chosen rock
+    if (player_input[1]==0):
+        if (computer_input[1]==1):
+            computer_wins()
+        if (computer_input[1]==2):
+            player_wins()
+    
+    if (player_input[1]==1):
+        if (computer_input[1]==2):
+            computer_wins()
+        if (computer_input[1]==0):
+            player_wins()
+    
+    if (player_input[1]==2):
+        if (computer_input[1]==0):
+            computer_wins()    
+        if (computer_input[1]==1):
+            player_wins()
+
+def get_computer_choice():
+    return random.choice(lists)
+#creatingGUi
 
 l1=Label(t,
          text="Rock Paper Scissor",font=("New Times Roman",20))
@@ -50,25 +85,17 @@ options=Label(input_frame,
               text="your options",font=("New Times Roman",13))
 options.grid(row=0,column=0,pady=8)
 rock_btn=Button(input_frame,
-                text="Rock",font=("New Times Roman",15),width=13,bg="red",bd=2)
+                text="Rock",font=("New Times Roman",15),width=13,bg="red",bd=2,command=lambda:player_choice(lists[0]))
 rock_btn.grid(row=0,column=1,pady=8)
 
 paper_btn=Button(input_frame,
-                 text="Paper",font=("New Times Roman",15),width=13,bg="green",bd=2)
+                 text="Paper",font=("New Times Roman",15),width=13,bg="green",bd=2,command=lambda:player_choice(lists[1]))
 paper_btn.grid(row=0,column=2,pady=8)
 
 scissor_btn=Button(input_frame,
-                   text="Scissor",font=("New Times Roman",15),width=13,bg="blue",bd=2)
+                   text="Scissor",font=("New Times Roman",15),width=13,bg="blue",bd=2,command=lambda:player_choice(lists[2]))
 scissor_btn.grid(row=0,column=3,pady=8)
 
-def player_choice(player_input):
-    global player_score, computer_score
-    print(player_input)
-    computer_input=get_computer_choice()
-    print(computer_input)
 
-    p_selected.config(text="You selected="+player_input[0])
-    c_selected.config(text="Computer Selected"+computer_input[0])
 
 t.mainloop()
-
